@@ -1,16 +1,15 @@
 # instagram
 
-A new Flutter project.
+Flutter를 이용한 instagram 만들기
 
-## Getting Started
+## 구현 기능
 
-This project is a starting point for a Flutter application.
+- 인스타그램 화면
+- 파일 분리
+- 좋아요 기능
+    - 누르면 빨간색 하트로 변경
+    - 다시 누르면 기존 검정색 하트로 변경
+- 피드 리스트
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 실행 화면
+![img](https://user-images.githubusercontent.com/61824695/219276499-e6defb22-acd6-46a3-bcef-e16e14f9a2bd.png)
