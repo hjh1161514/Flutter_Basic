@@ -4,12 +4,17 @@ import 'package:flutter/material.dart';
 class Feed extends StatefulWidget {
   const Feed({
     Key? key,
+    required this.imageUrl, // feed 클래스 호출 (=생성자 호출)시 imageUrl을 할당
   }) : super(key: key);
+
+  final String imageUrl; //이미지를 담을 변수
 
   @override
   State<Feed> createState() => _FeedState();
 }
 
+// _는 private 함수로 외부에서 접근이 불가능.
+// 외부에서 전달받은 변수인 imageUrl을 위에 있는 class에서 사용해야 함
 class _FeedState extends State<Feed> {
 
   // 좋아요 상태 관리
@@ -22,7 +27,7 @@ class _FeedState extends State<Feed> {
       children: [
         // 이미지
         Image.network(
-          "https://cdn2.thecatapi.com/images/kat_7kqBi.png",
+          widget.imageUrl,
           height: 400,
           width: double.infinity, // 부모에서 넣을 수 있는 최대 크기
           fit: BoxFit.cover, // scaleType과 비슷
