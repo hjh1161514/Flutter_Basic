@@ -71,6 +71,32 @@ class HomePage extends StatelessWidget {
               )),
         ],
       ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+
+            // 상품 검색창
+            child: TextField(
+              decoration: InputDecoration(
+                  labelText: "상품을 검색해주세요.",
+
+                  // 테두리
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          width: 2, color: Colors.grey
+                      )
+                  ),
+
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {},
+                  )
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
