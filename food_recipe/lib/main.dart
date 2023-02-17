@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -50,6 +51,26 @@ class HomePage extends StatelessWidget {
     ];
 
     // 화면에 보이는 영역
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          "Food Recipe",
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                  CupertinoIcons.person,
+                  color: Colors.black
+              )),
+        ],
+      ),
+    );
   }
 }
