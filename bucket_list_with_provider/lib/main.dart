@@ -1,9 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'bucket_service.dart';
 
 void main() {
   runApp(
-    const MyApp(),
+    MultiProvider( // HJ: Provider를 이용해 BucketService를 Widget tree의 꼭대기에 배치하고, 어디서든 쉽게 접근할 수 있도록 만들어줌
+    providers: [
+        ChangeNotifierProvider(create: (context) => BucketService()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
