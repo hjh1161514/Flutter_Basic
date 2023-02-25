@@ -14,4 +14,10 @@ class BucketService extends ChangeNotifier {
     bucketList.add(Bucket(job, false));
     notifyListeners(); // HJ: ChangeNotifier의 기능. 변경사항이 있는 경우 새로고침
   }
+
+  /// bucket 수정
+  void updateBucket(Bucket bucket, int index) {
+    bucketList[index] = bucket;
+    notifyListeners();
+  }
 }
