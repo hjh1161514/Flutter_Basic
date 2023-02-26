@@ -72,6 +72,7 @@ class HomePage extends StatelessWidget {
                   icon: Icon(CupertinoIcons.delete),
                   onPressed: () {
                     // 삭제 버튼 클릭시
+                    bucketService.deleteBucket(index);
                   },
                 ),
                 onTap: () {
