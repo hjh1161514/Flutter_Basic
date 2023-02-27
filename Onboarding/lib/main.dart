@@ -70,7 +70,34 @@ class OnboardingPage extends StatelessWidget {
         done: Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
         onDone: () {
           // When done button is press
+          // Done 클릭시 페이지 이동
+          Navigator.pushReplacement( // HJ: push 대신 pushReplacement를 쓰면 현재 페이지를 없어고 교체하는 거라 뒤로가기를 할 수 없음 => 뒤로 가기를 없애고 싶으면 이용
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
         },
+      ),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Home page"),
+      ), // HJ: 이전 화면이 있어서 자동으로 뒤로 가기 버튼이 생성됨
+      body: Center(
+          child: Text(
+            "환영합니다",
+            style:
+            TextStyle(
+                fontSize: 24
+            ),
+          )
       ),
     );
   }
