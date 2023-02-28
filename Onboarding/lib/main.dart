@@ -3,10 +3,18 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+late SharedPreferences prefs; // HJ: 전역 변수
+
+void main() async {
   HttpOverrides.global = NoCheckCertificateHttpOverrides(); // 생성된 HttpOverrides 객체 등록
-  runApp(MyApp());
+
+  // main() 함수에서 async를 쓰려면 필요
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // shared_preferences 인스턴스 생성
+  prefs = await SharedPreferences.getInstance(); // HJ: 파일 읽는 시간을 기다리기 위해 await 사용. async와 세트
 }
 
 class MyApp extends StatelessWidget {
