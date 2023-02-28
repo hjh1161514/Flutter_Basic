@@ -15,6 +15,8 @@ void main() async {
 
   // shared_preferences 인스턴스 생성
   prefs = await SharedPreferences.getInstance(); // HJ: 파일 읽는 시간을 기다리기 위해 await 사용. async와 세트
+
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,12 +24,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SharedPreferences에서 온보딩 완료 여부 조회
+    // isOnboarded에 해당하는 값에서 null을 반환하는 경우 false 할당 => ?? false
+    bool isOnboarded = prefs.getBool("isOnboarded") ?? false;
+
     return MaterialApp( // HJ: 앱에서 사용되는 모든 텍스트나 색상을 전역적으로 바꿀 때 사용
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.getTextTheme('Jua'),
       ),
-      home: OnboardingPage(),
+      home: isOnboarded ? HomePage() : OnboardingPage(),
     );
   }
 }
@@ -85,6 +91,9 @@ class OnboardingPage extends StatelessWidget {
         done: Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
         onDone: () {
           // When done button is press
+          // Done 클릭시 isOnboarded = true로 저장
+          prefs.setBool("isOnboarded", true);
+
           // Done 클릭시 페이지 이동
           Navigator.pushReplacement( // HJ: push 대신 pushReplacement를 쓰면 현재 페이지를 없어고 교체하는 거라 뒤로가기를 할 수 없음 => 뒤로 가기를 없애고 싶으면 이용
             context,
@@ -104,6 +113,16 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Home page"),
+        actions: [
+          // 삭제 버튼
+          IconButton(
+            onPressed: () {
+              // SharedPreferences에 저장된 모든 데이터 삭제
+              prefs.clear();
+            },
+            icon: Icon(Icons.delete),
+          )
+        ],
       ), // HJ: 이전 화면이 있어서 자동으로 뒤로 가기 버튼이 생성됨
       body: Center(
           child: Text(
