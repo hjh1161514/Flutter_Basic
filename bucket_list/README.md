@@ -1,16 +1,24 @@
-# bucket_list
+# 버킷리스트
 
-A new Flutter project.
+Flutter를 이용한 버킷리스트 만들기
 
-## Getting Started
+## 구현 기능
 
-This project is a starting point for a Flutter application.
+- 리스트 조회
+  - 리스트가 없을 경우 empty 뷰
+  - 리스트가 있으면 내용과 삭제 버튼이 함께 나타남
+- 리스트 추가
+  - 텍스트 값이 없는 상태로 '추가하기' 버튼을 누르면 에러 메세지가 나타남
+- 리스트 수정
+  - 리스트를 클릭하면 완료 표시(회색 글씨, 중앙선)가 나타남
+- 리스트 삭제
+    - 휴지통 버튼을 누르면 삭제 다이알로그가 나타남
+    - '확인' 버튼 클릭 시 리스트가 삭제됨
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 실행 화면
+![img초기](https://user-images.githubusercontent.com/61824695/222315849-3b3d76f5-bd3b-4817-ba30-234f4586bd03.png)
+![img작성](https://user-images.githubusercontent.com/61824695/222315853-0024203b-f4a5-4601-b29e-8c7a0a7ed920.png)
+![img작성에러](https://user-images.githubusercontent.com/61824695/222315862-60863e5f-57f9-4924-b2bf-05093cf73c89.png)
+![img조회](https://user-images.githubusercontent.com/61824695/222315868-08831ee9-0f31-4b05-b567-bdcc5134e0ea.png)
+![img수정](https://user-images.githubusercontent.com/61824695/222315876-51453c59-3830-4734-8dff-e3fc8d08f7cf.png)
+![img삭제](https://user-images.githubusercontent.com/61824695/222315882-915364b1-b08e-4cb3-bd1d-79fd3846c26d.png)
