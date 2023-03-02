@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  HttpOverrides.global = NoCheckCertificateHttpOverrides(); // 생성된 HttpOverrides 객체 등록
   runApp(MyApp());
 }
 
@@ -94,9 +97,44 @@ class HomePage extends StatelessWidget {
                   )
               ),
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.network(
+                    "https://cdn.pixabay.com/photo/2016/11/18/15/03/burger-1835192_960_720.jpg",
+                    height: 120,
+                    width: double.infinity,
+                    fit: BoxFit.fill
+                ),
+                Container(
+                    height: 120,
+                    width: double.infinity,
+                    color: Colors.black.withOpacity(0.5)
+                ),
+                Text(
+                    "수제버거",
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                    ),
+                )
+            ]
+            ),
+          ),
         ],
       ),
     );
+  }
+}
+
+class NoCheckCertificateHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
