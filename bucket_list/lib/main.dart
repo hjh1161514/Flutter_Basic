@@ -44,70 +44,47 @@ class _HomePageState extends State<HomePage> {
       ),
       body: bucketList.isEmpty
           ? Center(child: Text("버킷 리스트를 작성해 주세요.")) // true
-          : ListView.builder(  // false
-        itemCount: bucketList.length, // bucketList 개수 만큼 보여주기
-        itemBuilder: (context, index) { // HJ: index는 0부터 length-1까지
-          Bucket bucket = bucketList[index]; // index에 해당하는 bucket 가져오기
-          return ListTile(
-            // 버킷 리스트 할 일
-            title: Text(
-              bucket.job,
-              style: TextStyle(
-                fontSize: 24,
-                color: bucket.isDone ? Colors.grey : Colors.black,
-                decoration: bucket.isDone
-                    ? TextDecoration.lineThrough // HJ: 가운데에 선을 긋는다
-                    : TextDecoration.none,
-              ),
-            ),
-            // 삭제 아이콘 버튼
-            trailing: IconButton(
-              icon: Icon(CupertinoIcons.delete),
-              onPressed: () {
-                // 삭제 버튼 클릭시
-                showDialog(context: context, builder: (context) {
-                  return AlertDialog(
-                    title: Text("정말로 삭제하시겠습니까?"),
-                    actions: [
-                      // 취소 버튼
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context); // HJ: 다이얼로그를 끌 때
-                        },
-                        child: Text("취소"),
-                      ),
-                      // 확인 버튼
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            bucketList.removeAt(index); // HJ: ListView builder에서 전달하는 index
-                          });
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "확인",
-                          style: TextStyle(color: Colors.pink),
-                        ),
-                      ),
-                    ],
-                  );
-                },);
+          : ListView.builder(
+              // false
+              itemCount: bucketList.length, // bucketList 개수 만큼 보여주기
+              itemBuilder: (context, index) {
+                // HJ: index는 0부터 length-1까지
+                Bucket bucket = bucketList[index]; // index에 해당하는 bucket 가져오기
+                return ListTile(
+                  // 버킷 리스트 할 일
+                  title: Text(
+                    bucket.job,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: bucket.isDone ? Colors.grey : Colors.black,
+                      decoration: bucket.isDone
+                          ? TextDecoration.lineThrough // HJ: 가운데에 선을 긋는다
+                          : TextDecoration.none,
+                    ),
+                  ),
+                  // 삭제 아이콘 버튼
+                  trailing: IconButton(
+                    icon: Icon(CupertinoIcons.delete),
+                    onPressed: () {
+                      // 삭제 버튼 클릭시
+                      showDeleteDialog(context, index);
+                    },
+                  ),
+                  onTap: () {
+                    // 아이템(각 버킷리스트) 클릭시
+                    setState(() {
+                      bucket.isDone = !bucket.isDone;
+                    });
+                  },
+                );
               },
             ),
-            onTap: () {
-              // 아이템(각 버킷리스트) 클릭시
-              setState(() {
-                bucket.isDone = !bucket.isDone;
-              });
-            },
-          );
-        },
-      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () async {
           // + 버튼 클릭시 버킷 생성 페이지로 이동
-          String? job = await Navigator.push( // HJ: 언제 pop이 될 지 모르니 기다림
+          String? job = await Navigator.push(
+            // HJ: 언제 pop이 될 지 모르니 기다림
             context,
             MaterialPageRoute(builder: (_) => CreatePage()),
           );
@@ -119,6 +96,40 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
+    );
+  }
+
+  showDeleteDialog(BuildContext context, int index) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("정말로 삭제하시겠습니까?"),
+          actions: [
+            // 취소 버튼
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // HJ: 다이얼로그를 끌 때
+              },
+              child: Text("취소"),
+            ),
+            // 확인 버튼
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  bucketList
+                      .removeAt(index); // HJ: ListView builder에서 전달하는 index
+                });
+                Navigator.pop(context);
+              },
+              child: Text(
+                "확인",
+                style: TextStyle(color: Colors.pink),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -180,7 +191,8 @@ class _CreatePageState extends State<CreatePage> {
                   // 추가하기 버튼 클릭시
                   String job = textController.text;
                   if (job.isEmpty) {
-                    setState(() { // 안에 상태 변경하는 코드
+                    setState(() {
+                      // 안에 상태 변경하는 코드
                       error = "내용을 입력해주세요.";
                     });
                   } else {
