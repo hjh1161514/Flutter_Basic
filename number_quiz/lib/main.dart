@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -20,6 +21,15 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  /// Numbers API 호출하기
+  Future<String> getNumberTrivia() async {
+    // get 메소드로 URL 호출
+    Response result = await Dio().get('http://numbersapi.com/random/trivia');
+    String trivia = result.data; // 응답 결과 가져오기
+    print(trivia);
+    return trivia;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +40,7 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // quiz
-            Expanded(
+            Expanded( // HJ: 부모 안에서 차지할 수 있는 최대 크기로 늘려줌
               child: Center(
                 child: Text(
                   "퀴즈",
@@ -58,6 +68,7 @@ class HomePage extends StatelessWidget {
                 ),
                 onPressed: () {
                   // New Quiz 클릭시 퀴즈 가져오기
+                  getNumberTrivia();
                 },
               ),
             ),
