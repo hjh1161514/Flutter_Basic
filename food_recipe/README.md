@@ -1,16 +1,17 @@
-# food_recipe
+# Food Recipe
 
-A new Flutter project.
+Flutter를 이용한 Food Recipe 만들기
 
-## Getting Started
+## 구현 기능
 
-This project is a starting point for a Flutter application.
+- AppBar
+- Body
+    - 검색창
+    - 메뉴 리스트
+- Drawer
+    - 개인 정보
+    - 세일 배너
+    - 메뉴
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 실행 화면
+https://youtube.com/shorts/NTf7HXbTB30?feature=share
