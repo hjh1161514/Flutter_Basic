@@ -33,6 +33,9 @@ class CatService extends ChangeNotifier {
   // 고양이 사진 담을 변수
   List<String> catImages = [];
 
+  // 좋아요 사진
+  List<String> favoriteImages = [];
+
   // 생성자에서 함수 호출
   CatService() {
     getRandomCatImages();
@@ -49,6 +52,16 @@ class CatService extends ChangeNotifier {
       catImages.add(map["url"]);
     }
     notifyListeners();
+  }
+
+  void toggleFavoriteImage(String catImage) {
+    if (favoriteImages.contains(catImage)) {
+      favoriteImages.remove(catImage); // 이미 좋아요한 경우 삭제
+    } else {
+      favoriteImages.add(catImage); // 추가
+    }
+
+    notifyListeners(); // HJ: Consumer 아래에 있는 builder 부분이 다시 실행되면서 갱신
   }
 }
 
@@ -87,7 +100,31 @@ class HomePage extends StatelessWidget {
               catService.catImages.length, // HJ: 배열 원소 개수
                 (index) { // HJ: 익명 함수가 반복
                 String catImage = catService.catImages[index];
-                return Image.network(catImage, fit: BoxFit.cover);
+                return GestureDetector( // HJ: 클릭 이벤트를 추가하기 위해 사용하는 위젯
+                  onTap: () {
+                    catService.toggleFavoriteImage(catImage);
+                  },
+                  child: Stack( // HJ: Stack은 기본적으로 화면을 꽉 채우지 않음
+                    children: [
+                      Positioned.fill( // HJ: Positioned는 상하좌우 간격을 주는 위젯. fill을 사용하면 모든 상하좌우를 0으로. = 꽉 채운다
+                        child: Image.network(
+                            catImage,
+                            fit: BoxFit.cover
+                        ),
+                      ),
+                      Positioned(
+                        right: 8,
+                        bottom: 8,
+                        child: Icon(
+                            Icons.favorite,
+                            color: catService.favoriteImages.contains(catImage)
+                                ? Colors.amber
+                                : Colors.transparent
+                        ),
+                      )
+                    ],
+                  ),
+                );
               },
             ),
           ),
