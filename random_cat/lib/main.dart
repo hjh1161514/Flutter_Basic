@@ -1,7 +1,11 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  HttpOverrides.global = NoCheckCertificateHttpOverrides(); // 생성된 HttpOverrides 객체 등록
   runApp(
     MultiProvider( // HJ: 위젯트리 최상단에서 provider 사용
       providers: [
@@ -28,6 +32,24 @@ class MyApp extends StatelessWidget {
 class CatService extends ChangeNotifier {
   // 고양이 사진 담을 변수
   List<String> catImages = [];
+
+  // 생성자에서 함수 호출
+  CatService() {
+    getRandomCatImages();
+  }
+
+  // 랜덤 고양이 사진 API 호출
+  void getRandomCatImages() async {
+    Response result = await Dio().get(
+        "https://api.thecatapi.com/v1/images/search?limit=10&mime_types=jpg"
+    );
+    for (var i = 0; i < result.data.length; i++) {
+      var map = result.data[i];
+      print(map["url"]);
+      catImages.add(map["url"]);
+    }
+    notifyListeners();
+  }
 }
 
 /// 홈 페이지
@@ -62,11 +84,10 @@ class HomePage extends StatelessWidget {
             padding: EdgeInsets.all(8),
             crossAxisCount: 2, // HJ: 줄
             children: List.generate(
-              10, // HJ: 배열 원소 개수
-                  (index) { // HJ: 익명 함수가 반복
-                return Center(
-                  child: Text("$index", style: TextStyle(fontSize: 24)),
-                );
+              catService.catImages.length, // HJ: 배열 원소 개수
+                (index) { // HJ: 익명 함수가 반복
+                String catImage = catService.catImages[index];
+                return Image.network(catImage, fit: BoxFit.cover);
               },
             ),
           ),
@@ -92,5 +113,14 @@ class FavoritePage extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class NoCheckCertificateHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }
