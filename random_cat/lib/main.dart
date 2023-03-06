@@ -3,13 +3,20 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  // main() 함수에서 async를 쓰려면 필요
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // shared_preferences 인스턴스 생성
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
   HttpOverrides.global = NoCheckCertificateHttpOverrides(); // 생성된 HttpOverrides 객체 등록
   runApp(
     MultiProvider( // HJ: 위젯트리 최상단에서 provider 사용
       providers: [
-        ChangeNotifierProvider(create: (context) => CatService()), // HJ: CatService를 위젯트리 꼭대기에 주입
+        ChangeNotifierProvider(create: (context) => CatService(prefs)), // HJ: CatService를 위젯트리 꼭대기에 주입
       ],
       child: const MyApp(),
     ),
@@ -36,8 +43,11 @@ class CatService extends ChangeNotifier {
   // 좋아요 사진
   List<String> favoriteImages = [];
 
+  // SharedPreferences 인스턴스
+  SharedPreferences prefs;
+
   // 생성자에서 함수 호출
-  CatService() {
+  CatService(this.prefs) {
     getRandomCatImages();
   }
 
