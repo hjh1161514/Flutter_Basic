@@ -147,6 +147,43 @@ class FavoritePage extends StatelessWidget {
             title: Text("좋아요"),
             backgroundColor: Colors.amber,
           ),
+          body: GridView.count( // HJ: GridView는 타일 형태의 layout을 만들 때 사용
+            mainAxisSpacing: 8, // HJ: 타일 간의 간격
+            crossAxisSpacing: 8,
+            padding: EdgeInsets.all(8),
+            crossAxisCount: 2, // HJ: 줄
+            children: List.generate(
+              catService.favoriteImages.length, // HJ: 배열 원소 개수
+                  (index) { // HJ: 익명 함수가 반복
+                String catImage = catService.favoriteImages[index];
+                return GestureDetector( // HJ: 클릭 이벤트를 추가하기 위해 사용하는 위젯
+                  onTap: () {
+                    catService.toggleFavoriteImage(catImage);
+                  },
+                  child: Stack( // HJ: Stack은 기본적으로 화면을 꽉 채우지 않음
+                    children: [
+                      Positioned.fill( // HJ: Positioned는 상하좌우 간격을 주는 위젯. fill을 사용하면 모든 상하좌우를 0으로. = 꽉 채운다
+                        child: Image.network(
+                            catImage,
+                            fit: BoxFit.cover
+                        ),
+                      ),
+                      Positioned(
+                        right: 8,
+                        bottom: 8,
+                        child: Icon(
+                            Icons.favorite,
+                            color: catService.favoriteImages.contains(catImage)
+                                ? Colors.amber
+                                : Colors.transparent
+                        ),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
         );
       },
     );
