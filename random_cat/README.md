@@ -1,16 +1,17 @@
-# random_cat
+# 랜덤 고양이 앱
 
-A new Flutter project.
+Flutter를 이용한 랜덤 고양이 앱 만들기
 
-## Getting Started
+## 구현 기능
 
-This project is a starting point for a Flutter application.
+- 고양이 사진 보여주기
+- 좋아요 기능
+- 좋아요한 사진만 모아보기
+- 좋아요 사진 데이터 유지하기
+- API 통신
+    - dio 사용
+    - API 호출
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 실행 화면
+![img 랜덤 고양이 화면](https://user-images.githubusercontent.com/61824695/223000757-5abc3a67-531f-4788-9fcf-5d7eb083559e.png)
+![img 좋아요 화면](https://user-images.githubusercontent.com/61824695/223000759-cf95cfc1-660a-4d6c-9cd9-834912d9f2d6.png)
